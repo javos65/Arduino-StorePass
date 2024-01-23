@@ -13,7 +13,7 @@
 
 #include "stdio.h"
 
-#define DEBUG 1
+#define DEBUG 0
 #if DEBUG
 	#define Debug(__info,...) Serial.print(__info,##__VA_ARGS__)
 #else
