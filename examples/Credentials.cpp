@@ -19,11 +19,12 @@ byte Save_Credentials(struct EECredentials *O )
 {
   //Debug_Credentials(O);
   if (int eeAddress = Check_EEsize()) {
-     long c = O->counter+1;
+     int c = O->counter+1;//Debug(" * received counter +1 ");Debugln(c);
      EECredentials t; // dummy structure to test-read
-     EEPROM.get(eeAddress, t);
-     if(t.counter > 0) c = t.counter +1; // if valid counter in Eeprom, use it and increase
+     EEPROM.get(eeAddress, t);//Debug(" * read counter ");Debugln(t.counter);
+     if(t.counter > 0) {c = t.counter +1;} // if valid counter in Eeprom, use it and increase
      if (O->identity == EECredentials_ID) {
+         //Debug(" * saved new counter ");Debugln(c);
          O->counter=c; t.counter = c; t.identity=EECredentials_ID;
          SimpleCypher(O->ssid,t.ssid); SimpleCypher(O->wifipass,t.wifipass);
          SimpleCypher(O->login1,t.login1); SimpleCypher(O->pass1,t.pass1);
@@ -61,7 +62,7 @@ byte Debug_Credentials(struct EECredentials *O)
      Debug(" * Credentials:[");Debug(O->ssid);Debug(",");Debug(O->wifipass);
      Debug("],[");Debug(O->login1);Debug(",");Debug(O->pass1);
      Debug("],[");Debug(O->mqttadr);Debug(",");Debug(O->mqttlogin);Debug(",");Debug(O->mqttpass);
-     Debug("], id=");Debug(O->identity);Debug(", count=");Debugln(O->counter);
+     Debug("], id=");Debug(O->identity);Debug(", count=");Debug(O->counter);;Debug(", stop=");Debugln(O->stop);
      return(1);
 }
 
@@ -70,8 +71,7 @@ byte Erase_Credentials(struct EECredentials *O )
 {
   if (int eeAddress = Check_EEsize()) {  
     if (O->identity == EECredentials_ID) {
-      struct EECredentials x;
-      x.identity = 0;
+      struct EECredentials x = {"x","x","x","x","x","x","x",0x0,0,0};
       EEPROM.put(eeAddress, x);
       Debugln(" * Object erased from EEprom");
       return(1);
@@ -93,10 +93,9 @@ byte Read_Credentials(struct EECredentials *O)
   if (int eeAddress = Check_EEsize()) {    
      EECredentials t; // dummy structure to test-read
      EEPROM.get(eeAddress, t);
-     Debug_Credentials(&t); // raw read
+     //Debug_Credentials(&t); // raw read
      if (t.identity == EECredentials_ID){ // check ID
-        //EEPROM.get(eeAddress, *O);          // real data read to Object
-        O->counter= t.counter; O->identity=t.identity;
+        O->counter = t.counter; O->identity=t.identity;
         SimpleDecypher(t.ssid,O->ssid); SimpleDecypher(t.wifipass,O->wifipass);
         SimpleDecypher(t.login1,O->login1); SimpleDecypher(t.pass1,O->pass1);
         SimpleDecypher(t.mqttadr,O->mqttadr); SimpleDecypher(t.mqttlogin,O->mqttlogin);SimpleDecypher(t.mqttpass,O->mqttpass);

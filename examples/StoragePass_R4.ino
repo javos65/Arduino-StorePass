@@ -18,10 +18,10 @@
 #include "Credentials.h"
 
 ////////// THIS IS YOUR SECRET  !!! //////
-EECredentials G_Object = {"SSIDWIRELESS","yourpass","Foxadmin","AXSSS","192.168.200.20","admin1","pass1",0x55,50}; // Global Variable Object structure
+EECredentials G_Object = {"JVerfgESS","FosdgHouse","Foxadmin","AMafsSS","192.168.200.20","admin1","pass1",0x77,10,0}; // Global Variable Object structure
 ////////// THIS IS YOUR SECRET  !!! //////
 
-EECredentials G_test = {"MYtestnetwork","password1","Testadmin","xxxtestxxx","192.168.100.63","admin1","testcode",0x10,1}; // Global Variable Test structure
+EECredentials G_test = {"MYtestnetwork","password1","Testadmin","xxxtestxxx","192.168.100.63","admin1","testcode",0x10,1,0}; // Global Variable Test structure
 
 void setup() {
 /*************SERIAL SETUP ***************/
@@ -37,7 +37,9 @@ if (long st = Check_EEsize() ){
 else {
     Debugln(" * Size does not fit ");
     while(1);}
-  
+    
+ //Erase_Credentials(&G_Object);
+ 
  Debugln("\nSave Object  1 - ok"); 
  Debug_Credentials(&G_Object);
  Save_Credentials(&G_Object); // should be ok
@@ -45,6 +47,7 @@ else {
  Debugln("Save test  2 - fail"); 
  Debug_Credentials(&G_test);
  Save_Credentials(&G_test); // should fail
+ Debug_Credentials(&G_test);
 
  Debugln("Read Test  3 - ok"); 
  Read_Credentials(&G_test);
@@ -61,7 +64,16 @@ else {
  Read_Credentials(&G_test);
  Debug_Credentials(&G_test);
 
+ Debugln("Save Object  5 - ok"); 
+ Debug_Credentials(&G_Object);
+ Save_Credentials(&G_Object); // should be ok, increased
+ Read_Credentials(&G_test);
+ Debug_Credentials(&G_test);
  Serial.print("\nYour Wifi Credentials [SSID],[Pass]=[");Serial.print(G_Object.ssid);Serial.print("],[");Serial.print(G_Object.wifipass);Serial.println("]");
+
+ // Debug_Credentials(&G_Object);
+ //Save_Credentials(&G_Object); // should be ok, increased
+ 
 }
 
 

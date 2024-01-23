@@ -6,8 +6,8 @@
 
 #include <Arduino.h>
 #define byte uint8_t
-#define EECredentials_ID 0x55   // EEprom save ID for object to retrieve
-#define EE_SEED 71              // Seed for Cyphering
+#define EECredentials_ID 0x77   // EEprom save ID for object to retrieve
+#define EE_SEED 77             // Seed for Cyphering
 #define EE_MAXCHAR 32           // structure for EEprom storage:  7 x 32byte + 5 bytes = 229 bytes length + overhead = 232 bytes in total
 
 struct EECredentials {         
@@ -19,7 +19,8 @@ char mqttadr[EE_MAXCHAR];
 char mqttlogin[EE_MAXCHAR];
 char mqttpass[EE_MAXCHAR];
 byte identity;
-long counter;
+int counter;
+byte stop; // dummy
 };
 
 // Declare external functions in Credentials.cpp that cal be called from the sketch //
