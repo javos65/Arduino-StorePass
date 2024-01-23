@@ -36,11 +36,11 @@ void setup() {
   Debug(" * Credential struct, length: ");Debugln(crsize);
   if( (crsize+1) < eesize ) {   Debug(" * EEprom write-address at: 0x");Debugln( eesize-crsize-1,HEX);}
   else {
-    Debug(" * Size does not fit ");
+    Debugln(" * Size does not fit ");
     while(1);}
 
   
- Debugln("Save Object  1 - ok"); 
+ Debugln("\nSave Object  1 - ok"); 
  Debug_Credentials(&G_Object);
  Save_Credentials(&G_Object); // should be ok
  
@@ -62,6 +62,8 @@ void setup() {
  Save_Credentials(&G_Object); // should be ok
  Read_Credentials(&G_test);
  Debug_Credentials(&G_test);
+
+ Debug("\nYour Wifi Credentials [SSID],[Pass]=[");Debug(G_Object.ssid);Debug("],[");Debug(G_Object.wifipass);Debugln("]");
 }
 
 
