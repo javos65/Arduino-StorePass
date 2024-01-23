@@ -1,0 +1,12 @@
+
+EECredentials		KEYWORD1
+
+SimpleDecypher		KEYWORD2
+SimpleCypher		KEYWORD2
+Read_Credentials	KEYWORD2
+Erase_Credentials	KEYWORD2
+Save_Credentials	KEYWORD2
+Debug_Credentials 	KEYWORD2
+Check_EEsize 		KEYWORD2
+
+EECredentials_I		LITERAL1
